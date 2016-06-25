@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<script>
+var tool = 1;
+function brush() { //val == 1
+	tool = 1;
+	document.getElementById("brushIcon").src = "images/paintbrush-selected.png";
+	document.getElementById("squareIcon").src = "images/squareTool.png";
+	document.getElementById("circleIcon").src = "images/circleTool.png";
+}
+function square() { //val == 2
+	tool = 2;
+	document.getElementById("brushIcon").src = "images/paintbrush.png";
+	document.getElementById("squareIcon").src = "images/squareTool-selected.png";
+	document.getElementById("circleIcon").src = "images/circleTool.png";
+}
+function circle() { //val == 3
+	tool = 3;
+	document.getElementById("brushIcon").src = "images/paintbrush.png";
+	document.getElementById("squareIcon").src = "images/squareTool.png";
+	document.getElementById("circleIcon").src = "images/circleTool-selected.png";
+}
+</script>
+
+</head>
+
+
+
+
+
+<body>
+<aside style="float:right">
+<img id="brushIcon"  src = "images/paintbrush-selected.png" width = 100 height = 100
+onclick ="brush()"
+>
+</br>
+<img id="squareIcon"  src = "images/squareTool.png" width = 100 height = 100
+onclick = "square()"
+>
+</br>
+<img id="circleIcon"  src = "images/circleTool.png" width = 100 height = 100
+onclick = "circle()"
+>
+</aside>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script type="text/javascript">
+//TODO
+//SIDE BAR WITH PAINT BRUSH AND OTHER TOOLS ( GRADIENT/ SHAPES/ MORE)
+
+var red = 0, green = 0, blue = 0;
+var width = 25;
+function refRed() { //refresh red value
+    document.getElementById("redVal").innerHTML=redBar.value;
+    red=redBar.value;
+}
+function refGreen() { //refresh green value
+    document.getElementById("greenVal").innerHTML=greenBar.value;
+    green=greenBar.value;
+}
+function refBlue() { //refresh blue value
+    document.getElementById("blueVal").innerHTML=blueBar.value;
+    blue=blueBar.value;
+}
+function refWid() { //refresh width value
+    document.getElementById("widVal").innerHTML=widBar.value;
+    width=widBar.value;
+}
+function refresh() {
+    var elem = document.getElementById("brush");
+    elem.style.color = "rgb("+red+","+green+","+blue+")";
+    elem.style.backgroundColor = "rgb("+red+","+green+","+blue+")";
+    elem.style.height = width + "px";
+}
+function getRed() {
+    return red;
+}
+
+//document.getElementById("brushPanel").style.visibility = "hidden";
+
+//Working with canvas
+var penFlag = 0;
+var myX, myY;
+
+function penDown(currX, currY) {
+    penFlag = 1;
+    myX = currX;
+    myY = currY;
+
+}
+function penMove(currX,currY) {
+    if (penFlag==1 && tool==1) {
+        var c = document.getElementById("myCanvas");	
+        var ctx = c.getContext("2d");	
+
+        ctx.strokeStyle = "rgb("+red+","+green+","+blue+")";
+	ctx.lineWidth=width;
+	ctx.lineCap = "round";
+
+	ctx.beginPath();
+        ctx.moveTo(myX,myY);
+        ctx.lineTo(currX,currY);
+        ctx.stroke();
+	ctx.closePath();
+
+        myX = currX;
+        myY = currY;
+    }
+}
+function penUp(currX, currY) {
+    penFlag = 0;
+    if (tool==2) {
+        var c = document.getElementById("myCanvas");	
+        var ctx = c.getContext("2d");	
+
+	ctx.strokeStyle = "rgb("+red+","+green+","+blue+")";
+	ctx.lineWidth=width;
+	ctx.lineCap = "square";
+
+	ctx.beginPath();
+        ctx.moveTo(myX,myY);
+        ctx.lineTo(myX,currY);
+        ctx.stroke();
+        ctx.lineTo(currX,currY);
+        ctx.stroke();
+        ctx.lineTo(currX,myY);
+        ctx.stroke();
+        ctx.lineTo(myX,myY);
+        ctx.stroke();
+	ctx.closePath();
+    }
+    if (tool==3) {
+	var c = document.getElementById("myCanvas");	
+        var ctx = c.getContext("2d");	
+
+	ctx.strokeStyle = "rgb("+red+","+green+","+blue+")";
+	ctx.lineWidth=width;
+	ctx.lineCap = "round";
+
+	var rad = Math.sqrt(  (myX-currX)*(myX-currX)  +  (myY-currY)*(myY-currY)  );	
+
+	ctx.beginPath();
+	ctx.arc(myX,myY,rad,0,Math.PI*2);
+	ctx.stroke();
+	ctx.closePath();
+
+    }
+}
+
+
+
+
+
+//Working with different writing styles
+var tool = 1;
+function brush() { //val == 1
+	tool = 1;
+	document.getElementById("brushIcon").src = "images/paintbrush-selected.png";
+	document.getElementById("squareIcon").src = "images/squareTool.png";
+	document.getElementById("circleIcon").src = "images/circleTool.png";
+}
+function square() { //val == 2
+	tool = 2;
+	document.getElementById("brushIcon").src = "images/paintbrush.png";
+	document.getElementById("squareIcon").src = "images/squareTool-selected.png";
+	document.getElementById("circleIcon").src = "images/circleTool.png";
+}
+function circle() { //val == 3
+	tool = 3;
+	document.getElementById("brushIcon").src = "images/paintbrush.png";
+	document.getElementById("squareIcon").src = "images/squareTool.png";
+	document.getElementById("circleIcon").src = "images/circleTool-selected.png";
+}
+</script>
+
+<style type="text/css">
+#myCanvas {
+	cursor:none;
+	lineCap:round;
+	border:1px solid;
+
+	
+
+}
+#toolbar {
+	position:absolute;
+	left: 820px; top: 10px;
+
+}
+</style>
+</head>
+
+
+
+
+
+<body onload="refresh()">
+
+<div id="toolbar">
+<img id="brushIcon"  src = "images/paintbrush-selected.png" width = 100 height = 100
+onclick ="brush()"
+>
+</br>
+<img id="squareIcon"  src = "images/squareTool.png" width = 100 height = 100
+onclick = "square()"
+>
+</br>
+<img id="circleIcon"  src = "images/circleTool.png" width = 100 height = 100
+onclick = "circle()"
+>
+</div>
+
+<canvas id="myCanvas" width="800" height="500"
+
+onmousedown = "penDown(event.clientX,event.clientY)"
+onmousemove = "penMove(event.clientX,event.clientY)"
+onmouseup   = "penUp(event.clientX,event.clientY)"
+></canvas>
+
+
+
+<div id="brushPanel">
+
+<form action="action_page.asp"
+oninput = "refresh()">
+
+
+<div style="color:red;font-size:20px"> Red: </div>
+0
+<input type="range" id="redBar" name="redBar" value="0" max ="255"
+oninput = "refRed()">
+255
+<span> &nbsp&nbsp&nbsp&nbsp&nbsp </span>
+<b> <span id="redVal"> 0 </span> </b>
+</br>
+
+<div style="color:green;font-size:20px"> Green: </div>
+0
+<input type="range" id="greenBar" name="greenBar" value="0" max ="255"
+oninput = "refGreen()">
+255
+<span> &nbsp&nbsp&nbsp&nbsp&nbsp </span>
+<b> <span id="greenVal"> 0 </span> </b>
+</br>
+
+<div style="color:blue;font-size:20px"> Blue: </div>
+0
+<input type="range" id="blueBar" name="blueBar" value="0" max ="255"
+oninput = "refBlue()">
+255
+<span> &nbsp&nbsp&nbsp&nbsp&nbsp </span>
+<b> <span id="blueVal"> 0 </span> </b>
+</br>
+
+<div style="font-size:20px;"> Width: </div>
+1
+<input type="range"
+id="widBar" name="widBar" value="25" min = "1" max ="50"
+oninput = "refWid()" >
+50
+<span> &nbsp&nbsp&nbsp&nbsp&nbsp </span>
+<b> <span id="widVal"> 25 </span> </b>
+</br>
+
+</form>
+
+<p> Example Stroke: </p>
+<p id="brush" > </p>
+
+</div> 
+<!-- brush panel -->
+
+
+<p style = "text-align:right"> A drawing and painting website, created by James Enouen. </p>
+
+
+
+
+
+</body>
+</html>
