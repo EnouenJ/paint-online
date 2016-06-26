@@ -1,2 +1,2 @@
-# paint-online
-An online painting program with HTML
+# Paint Online
+An online painting program with HTML.  There are currently three different tools: a paintbruhs, a square tool, and a circle tool.  The paintbrush touches the page while the mouse is held and strokes are made as the mouse is dragged.  The square tool puts one corner where the mouse is clicked down and the other at the button is lifted.  The circle tool puts the center of the circle at the first click and the edge of the circle where the button is released.  Color is determined by RGB sliders and width is determined by another slider.
