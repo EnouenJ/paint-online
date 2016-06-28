@@ -134,7 +134,8 @@ function circle() { //val == 3
 	lineCap:round;
 	border:1px solid;
 
-	
+	position:absolute;
+	left: 10px; top: 10px;
 
 }
 #toolbar {
@@ -167,9 +168,9 @@ onclick = "circle()"
 
 <canvas id="myCanvas" width="800" height="500"
 
-onmousedown = "penDown(event.clientX,event.clientY)"
-onmousemove = "penMove(event.clientX,event.clientY)"
-onmouseup   = "penUp(event.clientX,event.clientY)"
+onmousedown = "penDown(event.clientX-10,event.clientY-10)"
+onmousemove = "penMove(event.clientX-10,event.clientY-10)"
+onmouseup   = "penUp(event.clientX-10,event.clientY-10)"
 ></canvas>
 
 
